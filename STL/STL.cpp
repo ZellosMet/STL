@@ -1,4 +1,4 @@
-//STL
+п»ї//STL
 #include<iostream>
 #include<array>
 #include<vector>
@@ -17,7 +17,7 @@ void main()
 
 #ifdef  STL_ARRAY
 
-	// array - это контейнер, который хранит данные в виде статического массива
+	// array - СЌС‚Рѕ РєРѕРЅС‚РµР№РЅРµСЂ, РєРѕС‚РѕСЂС‹Р№ С…СЂР°РЅРёС‚ РґР°РЅРЅС‹Рµ РІ РІРёРґРµ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РјР°СЃСЃРёРІР°
 
 	const int N = 5;
 	std::array<int, N> arr = { 3,5,8,13,21 };
@@ -28,7 +28,7 @@ void main()
 #endif 
 #ifdef STL_VECTOR
 
-	//vector - это контейнер, который хранит данные в виде динамического массива
+	//vector - СЌС‚Рѕ РєРѕРЅС‚РµР№РЅРµСЂ, РєРѕС‚РѕСЂС‹Р№ С…СЂР°РЅРёС‚ РґР°РЅРЅС‹Рµ РІ РІРёРґРµ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РјР°СЃСЃРёРІР°
 
 	std::vector<int> vec = { 0,1,1,2,3,5,8,13,21,34, };
 
@@ -41,18 +41,18 @@ void main()
 	vector_properties(vec);	
 	std::cout << delim << std::endl;
 
-	vec.resize(8); //переопределение размера
-	for (int i = 0; i < vec.size(); i++) std::cout << vec.at(i) /*проверяет выход за пределы вектора*/ << tab;
+	vec.resize(8); //РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёРµ СЂР°Р·РјРµСЂР°
+	for (int i = 0; i < vec.size(); i++) std::cout << vec.at(i) /*РїСЂРѕРІРµСЂСЏРµС‚ РІС‹С…РѕРґ Р·Р° РїСЂРµРґРµР»С‹ РІРµРєС‚РѕСЂР°*/ << tab;
 	vector_properties(vec);	
 	std::cout << delim << std::endl;
-	vec.reserve(120); // резервирует необходимый объём памяти
+	vec.reserve(120); // СЂРµР·РµСЂРІРёСЂСѓРµС‚ РЅРµРѕР±С…РѕРґРёРјС‹Р№ РѕР±СЉС‘Рј РїР°РјСЏС‚Рё
 	vector_properties(vec);	
 	std::cout << delim << std::endl;
-	vec.shrink_to_fit(); // уменьшает объём зарезервированной памяти до фактической
+	vec.shrink_to_fit(); // СѓРјРµРЅСЊС€Р°РµС‚ РѕР±СЉС‘Рј Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°РЅРЅРѕР№ РїР°РјСЏС‚Рё РґРѕ С„Р°РєС‚РёС‡РµСЃРєРѕР№
 	vector_properties(vec);	
 	std::cout << delim << std::endl;
 
-	//обработка исключений
+	//РѕР±СЂР°Р±РѕС‚РєР° РёСЃРєР»СЋС‡РµРЅРёР№
 	try
 	{
 		for (int i = 0; i < vec.size() * 2; i++)
@@ -79,8 +79,8 @@ void main()
 
 	int index;
 	int value;
-	std::cout << "Введите индекс добавляемого элемента: "; std::cin >> index;
-	std::cout << "Введите индекс добавляемого элемента: "; std::cin >> value;
+	std::cout << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; std::cin >> index;
+	std::cout << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; std::cin >> value;
 	vec.insert(vec.begin() + index, value);
 	for (int i = 0; i < vec.size(); i++) std::cout << vec[i] << tab;
 	std::cout << delim << std::endl;
@@ -93,7 +93,7 @@ void main()
 
 template<typename T>void vector_properties(const std::vector<T>& vec)
 {
-	std::cout << "Size:    \t" << vec.size() << std::endl; //текущий размер 
-	std::cout << "MaxSize: \t" << vec.max_size() << std::endl; // Максимальный размер
-	std::cout << "Capacity:\t" << vec.capacity() << std::endl; //Общая ёмкость(резервирование памяти)
+	std::cout << "Size:    \t" << vec.size() << std::endl; //С‚РµРєСѓС‰РёР№ СЂР°Р·РјРµСЂ 
+	std::cout << "MaxSize: \t" << vec.max_size() << std::endl; // РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ
+	std::cout << "Capacity:\t" << vec.capacity() << std::endl; //РћР±С‰Р°СЏ С‘РјРєРѕСЃС‚СЊ(СЂРµР·РµСЂРІРёСЂРѕРІР°РЅРёРµ РїР°РјСЏС‚Рё)
 }
