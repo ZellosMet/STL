@@ -5,7 +5,11 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STL", "STL\STL.vcxproj", "{81ECC8B5-1D37-429E-9D6F-5CE99595793F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Exsaption", "Exsaption\Exsaption.vcxproj", "{704E8A6A-CDE4-43D3-9428-F4A3DFD1082A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Exception", "Exsaption\Exsaption.vcxproj", "{704E8A6A-CDE4-43D3-9428-F4A3DFD1082A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssociotiveContainers", "AssociotiveContainers\AssociotiveContainers.vcxproj", "{477C20F5-3711-4E3D-9F6B-FA62DB6F9CDD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Police", "Police\Police.vcxproj", "{592512DC-ACF2-4CA7-9C77-1D6EEA6B6BA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,22 @@ Global
 		{704E8A6A-CDE4-43D3-9428-F4A3DFD1082A}.Release|x64.Build.0 = Release|x64
 		{704E8A6A-CDE4-43D3-9428-F4A3DFD1082A}.Release|x86.ActiveCfg = Release|Win32
 		{704E8A6A-CDE4-43D3-9428-F4A3DFD1082A}.Release|x86.Build.0 = Release|Win32
+		{477C20F5-3711-4E3D-9F6B-FA62DB6F9CDD}.Debug|x64.ActiveCfg = Debug|x64
+		{477C20F5-3711-4E3D-9F6B-FA62DB6F9CDD}.Debug|x64.Build.0 = Debug|x64
+		{477C20F5-3711-4E3D-9F6B-FA62DB6F9CDD}.Debug|x86.ActiveCfg = Debug|Win32
+		{477C20F5-3711-4E3D-9F6B-FA62DB6F9CDD}.Debug|x86.Build.0 = Debug|Win32
+		{477C20F5-3711-4E3D-9F6B-FA62DB6F9CDD}.Release|x64.ActiveCfg = Release|x64
+		{477C20F5-3711-4E3D-9F6B-FA62DB6F9CDD}.Release|x64.Build.0 = Release|x64
+		{477C20F5-3711-4E3D-9F6B-FA62DB6F9CDD}.Release|x86.ActiveCfg = Release|Win32
+		{477C20F5-3711-4E3D-9F6B-FA62DB6F9CDD}.Release|x86.Build.0 = Release|Win32
+		{592512DC-ACF2-4CA7-9C77-1D6EEA6B6BA3}.Debug|x64.ActiveCfg = Debug|x64
+		{592512DC-ACF2-4CA7-9C77-1D6EEA6B6BA3}.Debug|x64.Build.0 = Debug|x64
+		{592512DC-ACF2-4CA7-9C77-1D6EEA6B6BA3}.Debug|x86.ActiveCfg = Debug|Win32
+		{592512DC-ACF2-4CA7-9C77-1D6EEA6B6BA3}.Debug|x86.Build.0 = Debug|Win32
+		{592512DC-ACF2-4CA7-9C77-1D6EEA6B6BA3}.Release|x64.ActiveCfg = Release|x64
+		{592512DC-ACF2-4CA7-9C77-1D6EEA6B6BA3}.Release|x64.Build.0 = Release|x64
+		{592512DC-ACF2-4CA7-9C77-1D6EEA6B6BA3}.Release|x86.ActiveCfg = Release|Win32
+		{592512DC-ACF2-4CA7-9C77-1D6EEA6B6BA3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

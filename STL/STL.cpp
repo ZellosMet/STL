@@ -7,6 +7,7 @@
 
 template<typename T> void vector_properties(const std::vector<T>& vec);
 template<typename T> typename std::list<T>::const_iterator Iterator_List(const std::list<T>& list, const int index);
+template<typename T> typename std::forward_list<T>::iterator operator+(const typename std::forward_list<T>::iterator fl, const T index);
 
 #define delim "\n----------------------------------------------------\n" 
 #define tab "\t" 
@@ -15,13 +16,6 @@ template<typename T> typename std::list<T>::const_iterator Iterator_List(const s
 //#define STL_VECTOR
 //#define STL_FORWARD_LIST
 //#define STL_LIST
-
-template<typename T> typename std::forward_list<T>::iterator operator+(const typename std::forward_list<T>::iterator fl, const T index)
-{
-	typename std::forward_list<T>::iterator it = fl;
-	for (int i = 0; i < index - 1; i++) ++it;
-	return it;
-}
 
 void main()
 {
@@ -160,6 +154,13 @@ void main()
 	list.insert(Iterator_List(list, index), 5, value);
 	for (int i : list) std::cout << i << tab;
 #endif
+}
+
+template<typename T> typename std::forward_list<T>::iterator operator+(const typename std::forward_list<T>::iterator fl, const T index)
+{
+	typename std::forward_list<T>::iterator it = fl;
+	for (int i = 0; i < index - 1; i++) ++it;
+	return it;
 }
 
 template<typename T> typename std::list<T>::const_iterator Iterator_List( const std::list<T>& list, const int index)
