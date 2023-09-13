@@ -2,13 +2,11 @@
 #include<iostream>
 #include<array>
 #include<vector>
-#include<list>
 #include<forward_list>
+#include<list>
 
 template<typename T> void vector_properties(const std::vector<T>& vec);
-template<typename T> std::forward_list<int>::iterator Iterator_FL(std::forward_list<T>& fl, int index);
-template<typename T> std::list<int>::iterator Iterator_List_Begin(std::list<T>& fl, int index);
-template<typename T> std::list<int>::iterator Iterator_List_End(std::list<T>& list, int index);
+template<typename T> typename std::list<T>::const_iterator Iterator_List(const std::list<T>& list, const int index);
 
 #define delim "\n----------------------------------------------------\n" 
 #define tab "\t" 
@@ -17,6 +15,13 @@ template<typename T> std::list<int>::iterator Iterator_List_End(std::list<T>& li
 //#define STL_VECTOR
 //#define STL_FORWARD_LIST
 //#define STL_LIST
+
+template<typename T> typename std::forward_list<T>::iterator operator+(const typename std::forward_list<T>::iterator fl, const T index)
+{
+	typename std::forward_list<T>::iterator it = fl;
+	for (int i = 0; i < index - 1; i++) ++it;
+	return it;
+}
 
 void main()
 {
@@ -99,66 +104,80 @@ void main()
 #endif
 #ifdef STL_FORWARD_LIST
 
-	std::forward_list<int> fl = { 3,5,8,13,21,34,55 };
-	std::forward_list<int> fl1(10, 5);
-	std::forward_list<int> fl2(fl1);
-	std::cout << "Список fl" << std::endl;
+	std::forward_list<int> fl = { 3,5,8,13,21 };
+	std::vector<int> vec = { 34,55 };
+
 	for (int i : fl) std::cout << i << tab;
-	std::cout << delim;
-	fl.push_front(2);
-	for (int i : fl) std::cout << i << tab;
-	std::cout << delim;
-	std::cout << "Список fl1" << std::endl;
-	for (int i : fl1) std::cout << i << tab;
-	std::cout << delim;
-	std::cout << "Список fl2" << std::endl;
-	for (int i : fl2) std::cout << i << tab;
 
 	std::cout << "\nВведите индекс добавляемого элемента: "; std::cin >> index;
 	std::cout << "\nВведите значение добавляемого элемента: "; std::cin >> value;
 	
-	fl.insert_after(Iterator_FL(fl, index), value);
+	fl.insert_after(fl.begin()+index, value);
 	for (int i : fl) std::cout << i << tab;
 
 	std::cout << "\nВведите индекс удаляемого элемента: "; std::cin >> index;
 
-	fl.erase_after(Iterator_FL(fl, index));
+	fl.erase_after(fl.begin()+index);
 	for (int i : fl) std::cout << i << tab;	
+
+	std::cout << delim;
+	fl.insert_after(fl.begin() + index, vec.begin(), vec.end());
+	for (int i : fl) std::cout << i << tab;
+	
+	std::cout << delim;
+	fl.insert_after(fl.begin() + index, 5 , value);
+	for (int i : fl) std::cout << i << tab;
+	
+	std::cout << delim;
+	fl.insert_after(fl.begin() + index, {100,101,102});
+	for (int i : fl) std::cout << i << tab;
+
 #endif
 #ifdef STL_LIST
-	std::list<int> list = { 3,5,8,13,21,34,55,89,144,233 };
+	std::list<int> list = { 3,5,8,13,21,34 };
+	std::forward_list<int> f_list = { 55,89,144,233 };
 	for (int i : list) std::cout << i << tab;
 
 	std::cout << "\nВведите индекс добавляемого элемента: "; std::cin >> index;
 	std::cout << "\nВведите значение добавляемого элемента: "; std::cin >> value;
 
-	list.insert(Iterator_List_Begin(list, index), value);
+	list.insert(Iterator_List(list, index), value);
 	for (int i : list) std::cout << i << tab;
 	
 	std::cout << "\nВведите индекс удаляемого элемента: "; std::cin >> index;
-	list.erase(Iterator_List_End(list, index));
+	list.erase(Iterator_List(list, index));
+	for (int i : list) std::cout << i << tab;
+
+	std::cout << delim;
+	list.insert(Iterator_List(list, index), f_list.begin(), f_list.end());
+	for (int i : list) std::cout << i << tab;
+	
+	std::cout << delim;
+	list.insert(Iterator_List(list, index), {55,89});
+	for (int i : list) std::cout << i << tab;
+
+	std::cout << delim;
+	list.insert(Iterator_List(list, index), 5, value);
 	for (int i : list) std::cout << i << tab;
 #endif
 }
 
-template<typename T> std::forward_list<int>::iterator Iterator_FL(std::forward_list<T>& fl, int index)
+template<typename T> typename std::list<T>::const_iterator Iterator_List( const std::list<T>& list, const int index)
 {
-	typename std::forward_list<T>::iterator it = fl.begin();
-	for (int i = 0; i < index - 2; i++) ++it;
-	return it;
+	if (index >= list.size() / 2)
+	{
+		typename std::list<T>::const_iterator it = list.cend();
+		for (int i = 0; i < list.size() - index; i++) --it;
+		return it;
+	}
+	else
+	{
+		typename std::list<T>::const_iterator it = list.cbegin();
+		for (int i = 0; i < index; i++) ++it;
+		return it;
+	}
 }
-template<typename T> std::list<int>::iterator Iterator_List_Begin(std::list<T>& list, int index)
-{
-	typename std::list<T>::iterator it = list.begin();
-	for (int i = 0; i < index; i++) ++it;
-	return it;
-}
-template<typename T> std::list<int>::iterator Iterator_List_End(std::list<T>& list, int index)
-{
-	typename std::list<T>::iterator it = list.end();
-	for (int i = 0; i < list.size() - index; i++) --it;
-	return it;
-}
+
 template<typename T>void vector_properties(const std::vector<T>& vec)
 {
 	std::cout << "Size:    \t" << vec.size() << std::endl; //текущий размер 
