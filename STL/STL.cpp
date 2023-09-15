@@ -7,14 +7,14 @@
 
 template<typename T> void vector_properties(const std::vector<T>& vec);
 template<typename T> typename std::list<T>::const_iterator Iterator_List(const std::list<T>& list, const int index);
-template<typename T> typename std::forward_list<T>::iterator operator+(const typename std::forward_list<T>::iterator fl, const T index);
+template<typename T> typename std::forward_list<T>::const_iterator Iterator_FList(const std::forward_list<T>& fl, const int index);
 
 #define delim "\n----------------------------------------------------\n" 
 #define tab "\t" 
 
 //#define STL_ARRAY
 //#define STL_VECTOR
-//#define STL_FORWARD_LIST
+#define STL_FORWARD_LIST
 //#define STL_LIST
 
 void main()
@@ -106,24 +106,24 @@ void main()
 	std::cout << "\nВведите индекс добавляемого элемента: "; std::cin >> index;
 	std::cout << "\nВведите значение добавляемого элемента: "; std::cin >> value;
 	
-	fl.insert_after(fl.begin()+index, value);
+	fl.insert_after(Iterator_FList(fl, index), value);
 	for (int i : fl) std::cout << i << tab;
 
 	std::cout << "\nВведите индекс удаляемого элемента: "; std::cin >> index;
 
-	fl.erase_after(fl.begin()+index);
+	fl.erase_after(Iterator_FList(fl, index));
 	for (int i : fl) std::cout << i << tab;	
 
 	std::cout << delim;
-	fl.insert_after(fl.begin() + index, vec.begin(), vec.end());
+	fl.insert_after(Iterator_FList(fl, index), vec.begin(), vec.end());
 	for (int i : fl) std::cout << i << tab;
 	
 	std::cout << delim;
-	fl.insert_after(fl.begin() + index, 5 , value);
+	fl.insert_after(Iterator_FList(fl, index), 5 , value);
 	for (int i : fl) std::cout << i << tab;
 	
 	std::cout << delim;
-	fl.insert_after(fl.begin() + index, {100,101,102});
+	fl.insert_after(Iterator_FList(fl, index), {100,101,102});
 	for (int i : fl) std::cout << i << tab;
 
 #endif
@@ -156,9 +156,9 @@ void main()
 #endif
 }
 
-template<typename T> typename std::forward_list<T>::iterator operator+(const typename std::forward_list<T>::iterator fl, const T index)
+template<typename T> typename std::forward_list<T>::const_iterator Iterator_FList(const std::forward_list<T>& fl, const int index)
 {
-	typename std::forward_list<T>::iterator it = fl;
+	typename std::forward_list<T>::const_iterator it = fl.cbegin();
 	for (int i = 0; i < index - 1; i++) ++it;
 	return it;
 }
