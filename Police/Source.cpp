@@ -87,7 +87,9 @@ void main()
 	SetConsoleOutputCP(1251);
 
 	std::string num_auto; //номер автомабиля
-	std::string find_num;
+	std::string searc_num; //искомый номер
+	int star_of_range; //начало диапозона
+	int end_of_range; //конец диапозона
 	char place[256]; //место
 	int id; //ID правонарушения
 	char filename[80] = "Crime.txt";
@@ -119,11 +121,14 @@ void main()
 	//mymap base_load = load(filename);
 	//Print(base_load);
 
-	//std::cout << "Введите номер машины для поиска: "; std::cin >> find_num;
+	//std::cout << "Введите номер машины для поиска: "; std::cin >> searc_num;
 
-	//Search(base, find_num);
+	//Search(base, searc_num);
 
-	Search_by_range(base, -10, 30);
+	std::cout << "Введите начало диапозона: "; std::cin >> star_of_range;
+	std::cout << "Введите конец диапозона: "; std::cin >> end_of_range;
+
+	Search_by_range(base, star_of_range, end_of_range);
 }
 
 void Add_crime(mymap& base, std::string num_auto, char *place, int id)
@@ -228,8 +233,8 @@ void Search_by_range( const mymap Base, int Begin, int End)
 	mymap::const_iterator begin = Base.cbegin();
 	for (int i = 0; i < (Begin >= 0 ? Begin : Begin = 0); i++)//в цикле провека, чтобы не вылететь за пределы дерева
 		begin++;
-	mymap::const_iterator end = begin;
-	for (int i = 0; i <= (End<Base.size()-1 ? End-Begin : Base.size()-1); i++)//в цикле провека, чтобы не вылететь за пределы дерева
+	mymap::const_iterator end = Base.cbegin();
+	for (int i = 0; i <= (End<=Base.size()-1 ? End : Base.size()-1); ++i)//в цикле провека, чтобы не вылететь за пределы дерева
 		end++;
 
 	for (begin; begin != end; ++begin)
