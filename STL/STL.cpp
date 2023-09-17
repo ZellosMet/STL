@@ -14,7 +14,7 @@ template<typename T> typename std::forward_list<T>::const_iterator Iterator_FLis
 
 //#define STL_ARRAY
 //#define STL_VECTOR
-#define STL_FORWARD_LIST
+//#define STL_FORWARD_LIST
 //#define STL_LIST
 
 void main()

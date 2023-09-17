@@ -7,12 +7,15 @@
 
 #define delim "\n----------------------------------------------------\n" 
 #define tab "\t" 
+#define mymap std::map<std::string, std::list<Crime>>
 
 class Crime;
-void Print(std::map<std::string, std::list<Crime>> base);
-void Add_crime(std::map<std::string, std::list<Crime>>& base, std::string num_auto, char* place, int id);
-void save(std::map<std::string, std::list<Crime>> base, const char filename[]);
-std::map<std::string, std::list<Crime>> load(const char* filename);
+void Print(mymap base);
+void Add_crime(mymap& base, std::string num_auto, char* place, int id);
+void Save(mymap base, const char filename[]);
+mymap Load(const char* filename);
+void Search(const mymap base, std::string find_num);
+void Search_by_range(mymap Base, int Begin, int End);
 
 const std::map<int, std::string> CRIMES =
 {
@@ -70,7 +73,7 @@ public:
 std::ostream& operator<<(std::ostream& os, const Crime& obj)
 {
 	std::cout.width(5);
-	return os  << obj.get_id() << obj.get_crime() << " " << tab << tab << obj.get_place();
+	return os << obj.get_crime() << " " << tab << tab << obj.get_place();
 }
 std::ofstream& operator<<(std::ofstream& ofs, const Crime& obj)
 {
@@ -84,18 +87,19 @@ void main()
 	SetConsoleOutputCP(1251);
 
 	std::string num_auto; //номер автомабиля
+	std::string find_num;
 	char place[256]; //место
 	int id; //ID правонарушения
 	char filename[80] = "Crime.txt";
 
-	std::map<std::string, std::list<Crime>> base =
+	mymap base =
 	{
 		{"m777ab", {Crime(1, "ул. Ленина"), Crime(2, "ул. Ленина"), Crime(4, "ул. Парижской коммуны")}},
 		{"k231cc", {Crime(5, "ул. Карла Маркса"), Crime(6, "ул. Карла Маркса") }},
 		{"p441oc", {Crime(3, "ул. Пролетарская"), Crime(7, "ул. Пролетарская") }}
 	};
 
-	//Print(base);
+	Print(base);
 
 	//Запрос данных
 	//std::cout << "Введите номер машины: "; std::cin >> num_auto;
@@ -110,31 +114,34 @@ void main()
 	//std::cout << "\n-> "; std::cin >> id;
 
 	//Add_crime(base, num_auto, place, id);
-	Print(base);
-	save(base, filename);
-	std::map<std::string, std::list<Crime>> base_load = load(filename);
-	Print(base_load);
+	//Print(base);
+	//save(base, filename);
+	//mymap base_load = load(filename);
+	//Print(base_load);
+
+	//std::cout << "Введите номер машины для поиска: "; std::cin >> find_num;
+
+	//Search(base, find_num);
+
+	Search_by_range(base, -10, 30);
 }
 
-void Add_crime(std::map<std::string, std::list<Crime>>& base, std::string num_auto, char *place, int id)
+void Add_crime(mymap& base, std::string num_auto, char *place, int id)
 {
 	std::map<std::string, std::list<Crime>>::iterator it; //Создание итератора для прохождения по дереву
 	it = base.find(num_auto); //Поиск элемента дерева через "key"
 
 	if (it != base.end())
 	{
-		std::list<Crime> temp;	//
-		temp = (it->second);	// Создаём временные список для храннеия значений дерева по найденному ключу 
-		temp.push_back(Crime(id, place)); //Добавляем в список новый элемент
-		base.insert_or_assign(it->first, temp); //Перезаписываем значения в дереве по найденному ключу
+		it->second.push_back(Crime(id, place));
 	}
 	else
 	{
-		base.insert({ num_auto, {Crime(id, place)} }); //Добавляем новый элемент в дерево
+		base.insert({ num_auto, {Crime(id, place)} });
 	}
 }
 
-void Print(const std::map<std::string, std::list<Crime>> base)
+void Print(const mymap base)
 {
 	for (std::pair<std::string, std::list<Crime>> it : base)
 	{
@@ -148,7 +155,7 @@ void Print(const std::map<std::string, std::list<Crime>> base)
 	std::cout << std::endl;
 }
 
-void save(std::map<std::string, std::list<Crime>> base, const char *filename)
+void Save(mymap base, const char *filename)
 {
 	std::ofstream fout(filename); //Открываем поток для записи в файл
 	for (std::pair<std::string, std::list<Crime>> it : base) //По циклу записываем ключи
@@ -164,7 +171,7 @@ void save(std::map<std::string, std::list<Crime>> base, const char *filename)
 	system(command.c_str()); //Открываем созданный файл
 }
 
-std::map<std::string, std::list<Crime>> load(const char* filename)
+mymap Load(const char* filename)
 {
 	std::map<std::string, std::list<Crime>> base;
 	std::string licence_plate;
@@ -195,4 +202,43 @@ std::map<std::string, std::list<Crime>> load(const char* filename)
 		fin.close();
 	}
 	return base;
+}
+
+void Search(const mymap base, std::string find_num)
+{
+	mymap::const_iterator it; //Создание итератора для прохождения по дереву
+	it = base.find(find_num);
+	if (it != base.end())
+	{
+		std::cout << it->first << ":" << std::endl;
+		for (Crime l_it : it->second)
+		{
+			std::cout << tab << l_it;
+			std::cout << tab << std::endl;
+		}
+	}
+	else
+	{
+		std::cout << "Данного номера в базе нет" << std::endl;
+	}
+}
+
+void Search_by_range( const mymap Base, int Begin, int End)
+{
+	mymap::const_iterator begin = Base.cbegin();
+	for (int i = 0; i < (Begin >= 0 ? Begin : Begin = 0); i++)//в цикле провека, чтобы не вылететь за пределы дерева
+		begin++;
+	mymap::const_iterator end = begin;
+	for (int i = 0; i <= (End<Base.size()-1 ? End-Begin : Base.size()-1); i++)//в цикле провека, чтобы не вылететь за пределы дерева
+		end++;
+
+	for (begin; begin != end; ++begin)
+	{
+		std::cout << begin->first << ":\n";
+		for (Crime l_it : begin->second)
+		{
+			std::cout << tab << l_it;
+			std::cout << tab << std::endl;
+		}
+	}
 }
